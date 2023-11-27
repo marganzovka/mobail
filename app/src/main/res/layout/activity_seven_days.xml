@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".sevenDays"
+    android:background="@drawable/bg">
+    <ImageButton
+        android:id="@+id/buttonBack"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="10dp"
+        android:background="#4FEEC763"
+        app:srcCompat="@drawable/back"
+        tools:ignore="TouchTargetSizeCheck"
+        android:contentDescription="@string/back"/>
+
+
+    <LinearLayout
+        android:id="@+id/header_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:gravity="center">
+
+
+        <TextView
+            android:id="@+id/nameApp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:background="@android:color/transparent"
+            android:backgroundTint="@android:color/transparent"
+            android:fontFamily="@font/montserrat_bold"
+            android:shadowColor="#000000"
+            android:shadowDx="3"
+            android:shadowDy="3"
+            android:shadowRadius="1"
+            android:text="@string/app_name"
+
+
+            android:textColor="@color/text"
+            android:textSize="30sp" />
+
+
+
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/listView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_below="@id/header_title"
+        android:layout_marginHorizontal="40dp"
+        android:background="@color/whiteBG"
+        android:layout_marginBottom="150dp"/>
+
+
+</RelativeLayout>

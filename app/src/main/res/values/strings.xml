@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Weather</string>
+    <string name="nameField">City</string>
+    <string name="no_user_input">Enter your city</string>
+    <string name="hind">Humidity:</string>
+    <string name="cloud">Cloud:</string>
+    <string name="speedWind">Wind speed:</string>
+    <string name="details">details</string>
+    <string name="today">today</string>
+    <string name="tomorrow">tomorrow</string>
+    <string name="back">Back</string>
+</resources>
