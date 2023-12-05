@@ -1,25 +1,22 @@
 package com.example.weather;
 
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+
 import com.google.gson.Gson;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements FetchWeatherTask.OnTaskCompleted{
     EditText cityField;
     String nameCity, response;
     Button buttonSend, buttonDetalic, buttonSevenDays;
@@ -52,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
 
 
                 // Выполняем сетевые операции в фоновом потоке
-                new FetchWeatherTask().execute(nameCity);
+                performWeatherTask(nameCity);
             }
         });
 
@@ -60,9 +57,16 @@ public class MainActivity extends AppCompatActivity {
         buttonDetalic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent detalicAct = new Intent(getApplicationContext(),Detalics.class);
-                detalicAct.putExtra("jsonData", response);
-                startActivity(detalicAct);
+                if (response == null){
+                    Toast warning = new Toast(MainActivity.this);
+                    warning.makeText(MainActivity.this, "Please fill in the 'City' field and click the 'Today' button. After that, you will be able to proceed to the details.", Toast.LENGTH_LONG).show();
+
+                }else {
+                    Intent detalicAct = new Intent(getApplicationContext(),Detalics.class);
+                    detalicAct.putExtra("jsonData", response);
+                    startActivity(detalicAct);
+                }
+
 
             }
         });
@@ -70,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
         buttonSevenDays.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent sevenDayAct = new Intent(getApplicationContext(), sevenDays.class);
+                Intent sevenDayAct = new Intent(getApplicationContext(), Map.class);
                 sevenDayAct.putExtra("nameCity", nameCity);
                 startActivity(sevenDayAct);
             }
@@ -80,43 +84,16 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    // AsyncTask для выполнения сетевых операций в фоновом потоке
-    private class FetchWeatherTask extends AsyncTask<String, Void, String> {
+    private void performWeatherTask(String cityName) {
+        String key = "7cede650cf502fdfb397184a7367a08d";
+        String urlString = "https://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&appid=" + key + "&units=metric&lang=en";
 
-        @Override
-        protected String doInBackground(String... params) {
-            String cityName = params[0];
-            String key = "7cede650cf502fdfb397184a7367a08d";
-            String urlStringToday = "https://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&appid=" + key + "&units=metric&lang=en";
+        FetchWeatherTask weatherTask = new FetchWeatherTask(this);
+        weatherTask.execute(urlString);
+    }
 
-            try {
-                URL obj = new URL(urlStringToday);
-                HttpURLConnection connection = (HttpURLConnection) obj.openConnection();
-                connection.setRequestMethod("GET");
-
-                int responseCode = connection.getResponseCode();
-                System.out.println("Response Code: " + responseCode);
-
-                BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-                String inputLine;
-                StringBuilder response = new StringBuilder();
-
-                while ((inputLine = in.readLine()) != null) {
-                    response.append(inputLine);
-                }
-                in.close();
-
-                return response.toString();
-
-            } catch (Exception e) {
-                e.printStackTrace();
-                System.out.println("Error" + e);
-                return null;
-            }
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
+    @Override
+    public void onTaskCompleted(String result) {
             if (result != null) {
                 // Обновляем UI на основе результата
                 System.out.println("Response: " + result);
@@ -126,6 +103,7 @@ public class MainActivity extends AppCompatActivity {
                 Gson gson = new Gson();
                 Wheather wheather = gson.fromJson(result, Wheather.class);
                 List<Wheather.Info> weatherList = wheather.getWeatherList();
+
 
                 for (Wheather.Info weather : weatherList) {
                     nameWheatherField.setText(String.valueOf(weather.getDescription()));
@@ -161,7 +139,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-}
+
 //                        nameApp.setText(String.valueOf(base));
 // https://api.openweathermap.org/data/2.5/weather?q=Brest&appid=7cede650cf502fdfb397184a7367a08d&units=metric&lang=ru
 

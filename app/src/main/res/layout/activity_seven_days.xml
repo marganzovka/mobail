@@ -4,18 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".sevenDays"
+    tools:context=".Map"
     android:background="@drawable/bg">
-    <ImageButton
-        android:id="@+id/buttonBack"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="10dp"
-        android:background="#4FEEC763"
-        app:srcCompat="@drawable/back"
-        tools:ignore="TouchTargetSizeCheck"
-        android:contentDescription="@string/back"/>
 
 
     <LinearLayout
@@ -48,15 +38,23 @@
 
     </LinearLayout>
 
-    <ListView
-        android:id="@+id/listView"
+    <WebView
+        android:id="@+id/map"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:background="@color/yellow_bg"/>
+    <ImageButton
+        android:id="@+id/buttonBack"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="15dp"
         android:layout_marginTop="10dp"
-        android:layout_below="@id/header_title"
-        android:layout_marginHorizontal="40dp"
-        android:background="@color/whiteBG"
-        android:layout_marginBottom="150dp"/>
+        android:background="#4FEEC763"
+        app:srcCompat="@drawable/back"
+        tools:ignore="TouchTargetSizeCheck"
+        android:contentDescription="@string/back"/>
+
+
 
 
 </RelativeLayout>

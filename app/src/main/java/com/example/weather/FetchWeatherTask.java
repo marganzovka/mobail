@@ -7,16 +7,24 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-class FetchWeatherTask extends AsyncTask<String, Void, String> {
+public class FetchWeatherTask extends AsyncTask<String, Void, String> {
+
+    private OnTaskCompleted listener;
+
+    public interface OnTaskCompleted {
+        void onTaskCompleted(String result);
+    }
+
+    public FetchWeatherTask(OnTaskCompleted listener) {
+        this.listener = listener;
+    }
 
     @Override
     protected String doInBackground(String... params) {
-        String cityName = params[0];
-        String key = "7cede650cf502fdfb397184a7367a08d";
-        String urlStringToday = "https://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&appid=" + key + "&units=metric&lang=en";
+        String urlString = params[0];
 
         try {
-            URL obj = new URL(urlStringToday);
+            URL obj = new URL(urlString);
             HttpURLConnection connection = (HttpURLConnection) obj.openConnection();
             connection.setRequestMethod("GET");
 
@@ -40,4 +48,12 @@ class FetchWeatherTask extends AsyncTask<String, Void, String> {
             return null;
         }
     }
+
+    @Override
+    protected void onPostExecute(String result) {
+        if (listener != null) {
+            listener.onTaskCompleted(result);
+        }
+    }
 }
+

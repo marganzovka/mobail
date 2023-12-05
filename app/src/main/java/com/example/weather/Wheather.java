@@ -4,7 +4,6 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-// Ваш класс Person остается без изменений
 class Wheather {
 
     // сама погода

@@ -6,7 +6,7 @@
     <string name="cloud">Cloud:</string>
     <string name="speedWind">Wind speed:</string>
     <string name="details">details</string>
-    <string name="today">today</string>
-    <string name="tomorrow">tomorrow</string>
+    <string name="now">now</string>
+    <string name="map">map</string>
     <string name="back">Back</string>
 </resources>
