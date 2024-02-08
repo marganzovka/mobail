@@ -14,8 +14,7 @@ import android.widget.TextView;
 public class Map extends AppCompatActivity {
 
     ImageButton buttonBack;
-    String cityName, responce;
-    TextView title;
+    String cityName;
     WebView map;
 
 
